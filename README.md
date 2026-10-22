@@ -11,7 +11,6 @@ In this project, I evaluated the performance implications of data layout by impl
 
 I built an automated benchmarking framework to collect timing distributions and ran architectural cache simulations using Valgrind's Cachegrind to quantify D1 and LLd cache miss rates across various cache sizes, line sizes, and associativities.
 
----
 
 ## Completed Implementation
 
@@ -21,7 +20,6 @@ The core algorithm logic and data structure transformations are implemented in t
 * **`src/graph_csr.c`**: Implemented the conversion utility `convert_to_csr()` that computes vertex degrees, allocates contiguous arrays, and flattens adjacency lists into `row_ptr` (offsets) and `col_idx` (neighbor indices) arrays.
 * **`src/bfs_csr.c`**: Implemented cache-friendly BFS traversal over the CSR layout, transforming linked-list traversals into bounded loops over contiguous slices of memory.
 
----
 
 ## Methodology & Experimental Design
 
@@ -37,8 +35,6 @@ To isolate traversal efficiency from fixed program overheads and system noise:
 
 
 
----
-
 ## Key Performance & Architectural Insights
 
 ### 1. Execution Speedup & Runtime Stability
@@ -53,7 +49,6 @@ To isolate traversal efficiency from fixed program overheads and system noise:
 * **Associativity Sweeps ($2\text{-way} \rightarrow 8\text{-way}$)**: Varying associativity had negligible impact on miss rates, proving that conflict misses are not the primary bottleneck in BFS. Memory layout selection is far more critical than associativity tuning.
 * **Cache Size Sweeps ($16\text{KB} \rightarrow 64\text{KB}$)**: Larger cache capacities reduced misses primarily in graphs with broad traversal frontiers (Grid and dense ER graphs), while streaming patterns (Chain) showed minimal sensitivity to capacity changes.
 
----
 
 ## Instructions to Run & Profile
 
